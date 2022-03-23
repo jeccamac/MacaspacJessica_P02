@@ -1,0 +1,19 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CorpseDolly : MonoBehaviour
+{
+    public GameObject corpseDolly;
+
+    GameObject playerCorpse;
+    public void Start()
+    {
+        playerCorpse = GameObject.Find("PlayerCorpse");
+    }
+
+    public void Update()
+    {
+        corpseDolly.transform.position = playerCorpse.transform.position;
+    }
+}
