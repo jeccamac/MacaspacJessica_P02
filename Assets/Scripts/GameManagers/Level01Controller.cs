@@ -7,43 +7,50 @@ using UnityEngine.UI;
 public class Level01Controller : MonoBehaviour
 {
     [SerializeField] Text _currentScoreTextView;
-    [SerializeField] GameObject _pauseMenu;
 
-    int _currentScore;
+    GameObject pauseMenu;
+
+    public int _currentScore;
 
     GameObject Player;
     PlayerStats fpsPlayer;
 
-    public float mouseSensitivity = 200f;
+    SettingsMenu settingsMenu; // reference for sliders
+
+    private float maxMouseSense = 300f;
+    private float minMouseSense = 100f;
+    public float mouseSensitivity;
+    public static bool gameIsPaused;
 
     public void Start()
     {
         Player = GameObject.Find("FPS Player"); // find fps player game object first
-        fpsPlayer = Player.GetComponent<PlayerStats>(); // then get component from the object - getComponent wont work unless you have the baseObject attached or called from Find^
+        fpsPlayer = Player.GetComponent<PlayerStats>(); // then get component from the object - getComponent wont work unless you have the baseObject attached or called from Find^        
 
+        pauseMenu = GameObject.Find("PauseMenu_pnl");
+        // connect to slider in settings menu
+        settingsMenu = pauseMenu.GetComponent<SettingsMenu>();
+
+        pauseMenu.SetActive(false);
+
+        fpsPlayer.currentHealth = fpsPlayer.healthMax;
+        fpsPlayer.currentStamina = fpsPlayer.staminaMax;
+        
     }
 
     public void Update()
     {
-        // Increase Score manually
+        // IncreaseScore();
         // TODO replace with real implementation later
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            IncreaseScore(5);
-        }
-        // Exit Level
-        // TODO bring up popup menu for navigation
+        
+        // Popup menu for navigation
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            _pauseMenu.SetActive(true);
-            //PauseGame();
-            Cursor.lockState = CursorLockMode.None; //ACTIVATE CURSOR
-        } else
-        {
-            _pauseMenu.SetActive(false);
-            //ResumeGame();
-            Cursor.lockState = CursorLockMode.Locked;
-        }
+            gameIsPaused = !gameIsPaused;
+            PauseGame();
+            mouseSensitivity = Mathf.Clamp(mouseSensitivity, minMouseSense, maxMouseSense);
+
+        } 
 
         if (fpsPlayer.currentHealth <= 0)
         {
@@ -76,18 +83,46 @@ public class Level01Controller : MonoBehaviour
 
     public void PauseGame()
     {
-        Time.timeScale = 0;
-        Debug.Log("Paused Game");
-    }
+        if (gameIsPaused)
+        {
+            Time.timeScale = 0f;
+            Debug.Log("Paused Game");
+            pauseMenu.SetActive(true);
 
+            settingsMenu.UpdateMouseSlider();
+            settingsMenu.UpdateVolumeSlider();
+
+            Cursor.lockState = CursorLockMode.None; //ACTIVATE CURSOR
+
+        } else
+        {
+            Time.timeScale = 1;
+            Debug.Log("Resume Game");
+            pauseMenu.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+    }
+    }
+    
+    /*
     public void ResumeGame()
     {
-        Time.timeScale = 1;
-        Debug.Log("Resume Game");
+        if (gameIsPaused)
+        {
+            Time.timeScale = 1;
+            Debug.Log("Resume Game");
+            _pauseMenu.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
+    */
 
+    public void RestartLevel()
+    {
+        Application.LoadLevel(Application.loadedLevel);
+    }
     public void QuitGame()
     {
         ExitLevel();
+        gameIsPaused = gameIsPaused; // dont pause after exiting to menu, character freezes
     }
 }

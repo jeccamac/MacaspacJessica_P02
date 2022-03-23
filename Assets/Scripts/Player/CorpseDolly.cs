@@ -7,7 +7,7 @@ public class CorpseDolly : MonoBehaviour
     public GameObject corpseDolly;
 
     GameObject playerCorpse;
-    public void Start()
+    public void Awake()
     {
         playerCorpse = GameObject.Find("PlayerCorpse");
     }
