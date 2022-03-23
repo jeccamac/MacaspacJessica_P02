@@ -64,15 +64,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\AudioManager.cs" />
+    <Compile Include="Assets\Scripts\EnemyStats.cs" />
     <Compile Include="Assets\Scripts\Examples\PlayerHealth.cs" />
     <Compile Include="Assets\Scripts\Examples\SliderRotator.cs" />
     <Compile Include="Assets\Scripts\Examples\UIManager.cs" />
-    <Compile Include="Assets\Scripts\Level01Controller.cs" />
-    <Compile Include="Assets\Scripts\MainMenuController.cs" />
-    <Compile Include="Assets\Scripts\MouseLook.cs" />
-    <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\SceneLoader.cs" />
+    <Compile Include="Assets\Scripts\GameManagers\AudioManager.cs" />
+    <Compile Include="Assets\Scripts\GameManagers\Level01Controller.cs" />
+    <Compile Include="Assets\Scripts\GameManagers\MainMenuController.cs" />
+    <Compile Include="Assets\Scripts\GameManagers\SceneLoader.cs" />
+    <Compile Include="Assets\Scripts\HazardVolume.cs" />
+    <Compile Include="Assets\Scripts\Player\CorpseCam.cs" />
+    <Compile Include="Assets\Scripts\Player\CorpseDolly.cs" />
+    <Compile Include="Assets\Scripts\Player\HUDmanager.cs" />
+    <Compile Include="Assets\Scripts\Player\MouseLook.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerStats.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.2f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

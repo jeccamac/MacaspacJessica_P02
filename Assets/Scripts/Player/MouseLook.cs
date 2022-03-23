@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-    public float mouseSensitivity = 100f;
+    GameObject levelController;
+    Level01Controller level01Control;
 
     public Transform playerBody;
 
@@ -14,13 +15,18 @@ public class MouseLook : MonoBehaviour
     {
         // curser invisible
         Cursor.lockState = CursorLockMode.Locked;
+
+        levelController = GameObject.Find("LevelController");
+        level01Control = levelController.GetComponent<Level01Controller>();
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        var _mouseSensitivity = level01Control.mouseSensitivity;
+
+        float mouseX = Input.GetAxis("Mouse X") * _mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * _mouseSensitivity * Time.deltaTime;
 
         xRotation -= mouseY; // implement mouseY with y axis rotation on camera
         xRotation = Mathf.Clamp(xRotation, -90f, 90f); // clamp rotation so doesn't move beyond 90degrees both ways

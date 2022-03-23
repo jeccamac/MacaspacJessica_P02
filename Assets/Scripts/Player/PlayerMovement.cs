@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController controller; // reference characterController
 
     public float characterSpeed = 12f;
+    public float characterSprint = 50f;
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
 
@@ -17,7 +18,6 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocity;
     bool isGrounded; // boolean to check if player is on the ground true/false
 
-    // Update is called once per frame
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); // create sphere based on these numbers, and if true/false
@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f; // force player down to ground
-            Debug.Log("Player is grounded");
+            //Debug.Log("Player is grounded");
         }
 
         float x = Input.GetAxis("Horizontal");
@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
 
         controller.Move(move * characterSpeed * Time.deltaTime); // motor that drives the player
 
-        if (Input.GetKey(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             Debug.Log("Jump is pressed");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity); // squareroot of velocity needed to jump
@@ -45,5 +45,30 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+        
+    }
+
+    private void FixedUpdate()
+    {
+        // get stamina info from PlayerStats
+        PlayerStats curStamina = GetComponent<PlayerStats>(); // get component works here because both playerMovement and playerStats are attached to the same gameObject(FPS Player)
+
+        // if hold shift, sprint and use up stamina
+        if (Input.GetKey(KeyCode.LeftShift) && isGrounded)
+        {
+            if (curStamina.currentStamina != 0)
+            {
+                Debug.Log("Sprint is pressed");
+                characterSpeed = characterSprint;
+                curStamina.TakeStamina(1);
+            }
+
+        }
+        else
+        {
+            //Debug.Log("Not sprinting");
+            characterSpeed = 12f;
+        }
     }
 }
+
