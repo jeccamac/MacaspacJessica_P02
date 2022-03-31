@@ -127,4 +127,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa25c408cd357b043ba471d3bc0c6b2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  corpseDolly: {fileID: 6054049843759256132}
+  corpseDolly: {fileID: 9152460690929467273, guid: 54df6a04fed1fc54082e1c1c717ebd7d,
+    type: 3}

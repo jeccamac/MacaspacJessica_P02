@@ -42,6 +42,18 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity); // squareroot of velocity needed to jump
         }
 
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Debug.Log("Swap Weapon");
+            
+        }
+
+        // shoot gun w/raycasting
+        /*
+        when you pull the trigger (from the player)
+	        increment gun step by 1
+        */
+
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);

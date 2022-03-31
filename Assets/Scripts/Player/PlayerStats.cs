@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    [Header("Player Stats")]
     public int healthMax = 100;
     public float currentHealth;
     public float staminaMax = 100f;
     public float currentStamina;
     public bool invincibility = false;
+
+    private bool playerIsDead = false; // bool to check if player is dead, helps start/stop instantiating prefabs in update
 
     [SerializeField] GameObject _playerHUD;
 
@@ -36,23 +39,34 @@ public class PlayerStats : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, healthMax); // set _currentHealth between these two values: 0 and _maxHealth
         currentStamina = Mathf.Clamp(currentStamina, 0, staminaMax);
         currentStamina += 0.2f;
+
+        if (currentHealth <= 0)
+        {
+            playerIsDead = true;
+            Kill();
+        }
     }
 
     public void Kill()
     {
-        Debug.Log("Player has been killed!");
+        if (playerIsDead == true)
+        {
+            Debug.Log("Player has been killed!");
 
-        _deathHUD.SetActive(true);
+            _deathHUD.SetActive(true);
 
-        // Instantiate at position (0, 0, 0) and zero rotation.
-        Instantiate(corpsePrefab, new Vector3(0, 0, 0), Quaternion.identity);
-        Instantiate(corpseCam, new Vector3(0, 0, 0), Quaternion.identity);
+            // Instantiate at position (0, 0, 0) and zero rotation.
+            Instantiate(corpsePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            Instantiate(corpseCam, new Vector3(0, 0, 0), Quaternion.identity);
 
-        Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.None;
 
-        _playerHUD.SetActive(false);
+            _playerHUD.SetActive(false);
 
-        this.gameObject.SetActive(false);
+            this.gameObject.SetActive(false); // don't destroy, want to keeep player gameObject info for LevelController
+
+            playerIsDead = false; // stops instantiating multiple prefabs
+        }
     }
 
     public void TakeDamage(float damageAmount)

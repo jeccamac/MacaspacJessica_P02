@@ -66,18 +66,20 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\BarrierKey.cs" />
     <Compile Include="Assets\Scripts\CollectibleScore.cs" />
-    <Compile Include="Assets\Scripts\EnemyStats.cs" />
+    <Compile Include="Assets\Scripts\EnemyController.cs" />
     <Compile Include="Assets\Scripts\Examples\PlayerHealth.cs" />
     <Compile Include="Assets\Scripts\Examples\SliderRotator.cs" />
     <Compile Include="Assets\Scripts\Examples\UIManager.cs" />
     <Compile Include="Assets\Scripts\GameManagers\AudioManager.cs" />
     <Compile Include="Assets\Scripts\GameManagers\Level01Controller.cs" />
     <Compile Include="Assets\Scripts\GameManagers\MainMenuController.cs" />
+    <Compile Include="Assets\Scripts\GameManagers\PlayerManager.cs" />
     <Compile Include="Assets\Scripts\GameManagers\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\GameManagers\SettingsMenu.cs" />
     <Compile Include="Assets\Scripts\HazardVolume.cs" />
     <Compile Include="Assets\Scripts\Player\CorpseCam.cs" />
     <Compile Include="Assets\Scripts\Player\CorpseDolly.cs" />
+    <Compile Include="Assets\Scripts\Player\GunController.cs" />
     <Compile Include="Assets\Scripts\Player\HUDmanager.cs" />
     <Compile Include="Assets\Scripts\Player\MouseLook.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
