@@ -7,10 +7,13 @@ public class CollectibleScore : MonoBehaviour
     GameObject lvlController;
     Level01Controller scoreTracker;
 
+    [SerializeField] AudioSource _soundCollect = null;
+
     public void Start()
     {
         lvlController = GameObject.Find("LevelController");
         scoreTracker = lvlController.GetComponent<Level01Controller>();
+        _soundCollect = GetComponent<AudioSource>();
     }
     public void OnTriggerEnter(Collider other)
     {
@@ -21,6 +24,7 @@ public class CollectibleScore : MonoBehaviour
         if (thisPlayer != null)
         {
             scoreTracker.IncreaseScore(10);
+            _soundCollect.Play();
             Destroy(gameObject, 1f);
         }
     }

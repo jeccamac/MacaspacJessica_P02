@@ -20,7 +20,7 @@ public class Level01Controller : MonoBehaviour
     private float maxMouseSense = 300f;
     private float minMouseSense = 100f;
     public float mouseSensitivity;
-    public static bool gameIsPaused;
+    public static bool gameIsPaused;    
 
     public void Start()
     {
@@ -51,11 +51,6 @@ public class Level01Controller : MonoBehaviour
             mouseSensitivity = Mathf.Clamp(mouseSensitivity, minMouseSense, maxMouseSense);
 
         } 
-
-        if (fpsPlayer.currentHealth <= 0)
-        {
-            fpsPlayer.Kill();
-        }
     }
 
     public void ExitLevel()
