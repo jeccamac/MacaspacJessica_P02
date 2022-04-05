@@ -10,19 +10,19 @@ public class GunController : MonoBehaviour
     [SerializeField] Transform rayOrigin;
 
     [Tooltip("How far to shoot")]
-    [SerializeField] float shootDistance = 10f;
+    [SerializeField] float shootDistance = 20f;
 
     [Tooltip("Visual feedback when firing, can be light or particles")]
-    [SerializeField] GameObject projectileVisualFeedback;
+    [SerializeField] TrailRenderer bulletTrail;
 
     [SerializeField] int weaponDamage = 20;
-
-    [Tooltip("What objects in the layer you are able to hit")]
-    [SerializeField] LayerMask hitLayers;
+    public AudioSource sndShoot;
+    //[Tooltip("What objects in the layer you are able to hit")]
+    //[SerializeField] LayerMask hitLayers;
 
     RaycastHit objectHit; // stores info about our RaycastHit
 
-    
+    private float lastShootTime;
 
     private void Update()
     {
@@ -33,18 +33,23 @@ public class GunController : MonoBehaviour
     }
 
     // fire the weapon using Raycast
-    void Shoot()
+    public void Shoot()
     {
         // calculate direction to shoot the Ray
         Vector3 rayDirection = playerCamera.transform.forward;
+
         // cast a Debug Ray
         Debug.DrawRay(rayOrigin.position, rayDirection * shootDistance, Color.blue, 1f); // start position, direction & distance, color, how long visual before disappearing
+
+        sndShoot.Play();
+        TrailRenderer trail = Instantiate(bulletTrail, rayOrigin.position, Quaternion.identity); // visual bullet trail
+        
         // fire the Raycast
-        if (Physics.Raycast(rayOrigin.position, rayDirection, out objectHit, shootDistance, hitLayers)) // out objectHit gets infor we stored on what the Raycast hit
+        if (Physics.Raycast(rayOrigin.position, rayDirection, out objectHit, shootDistance)) // out objectHit gets info we stored on what the Raycast hit
         {
             Debug.Log("You Hit " + objectHit.transform.name); // get name of object you hit
+            StartCoroutine(SpawnTrail(trail, objectHit));
 
-            projectileVisualFeedback.transform.position = objectHit.point; // move the visual to the impact point where you hit the object
 
             if (objectHit.transform.tag == "Enemy")
             {
@@ -56,7 +61,18 @@ public class GunController : MonoBehaviour
                     _enemy.EnemyTakeDamage(weaponDamage);
                 }
             }
-            
+
+            if (objectHit.transform.tag == "Bomb")
+            {
+                // apply BombTakeDamage
+                HazardVolume _hazard = objectHit.transform.gameObject.GetComponent<HazardVolume>();
+                if (_hazard != null)
+                {
+                    Debug.Log("Detected Bomb");
+                    _hazard.BombDestroy();
+                }
+            }
+
             if (objectHit.transform.tag == "Key")
             {
                 // unlock barriers
@@ -67,13 +83,32 @@ public class GunController : MonoBehaviour
                     _barrierKey.UnlockBarrier();
                 }
             }
-            
-
-        } else
+        }
+        else
         {
             Debug.Log("Miss");
         }
     }
+
+    
+    private IEnumerator SpawnTrail(TrailRenderer Trail, RaycastHit Hit)
+    {
+        float time = 0;
+        Vector3 startPosition = Trail.transform.position;
+
+        while (time < 1)
+        {
+            Trail.transform.position = Vector3.Lerp(startPosition, Hit.point, time);
+            time += Time.deltaTime / Trail.time;
+
+            yield return null;
+        }
+
+        Trail.transform.position = Hit.point;
+
+        Destroy(Trail.gameObject, Trail.time);
+    }
+    
 
     /* ASSAULT RIFLE - Burst Fire
     on the gun object
@@ -85,5 +120,13 @@ public class GunController : MonoBehaviour
 		
 	if gun step is greater then (total gun cooldown, like 60)
 		loop gun step back to 0
+
+    make sure you make it so that you cant shoot the gun again until gun step = 0
+    or else you can rapid fire the gun by mashing click
+    you might also want to make it so that you have to RELEASE the trigger to reset to 0, otherwise it loops back to -1
+    so the burst is semi auto instead of full
+
+    count++;
+
     */
 }

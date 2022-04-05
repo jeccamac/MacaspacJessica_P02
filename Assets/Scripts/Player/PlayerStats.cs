@@ -11,6 +11,7 @@ public class PlayerStats : MonoBehaviour
     public float currentStamina;
     public bool invincibility = false;
 
+    public AudioSource sndDeath;
     private bool playerIsDead = false; // bool to check if player is dead, helps start/stop instantiating prefabs in update
 
     [SerializeField] GameObject _playerHUD;
@@ -52,7 +53,7 @@ public class PlayerStats : MonoBehaviour
         if (playerIsDead == true)
         {
             Debug.Log("Player has been killed!");
-
+            sndDeath.Play();
             _deathHUD.SetActive(true);
 
             // Instantiate at position (0, 0, 0) and zero rotation.

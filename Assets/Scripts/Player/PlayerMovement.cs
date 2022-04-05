@@ -15,9 +15,12 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = 0.4f; // radius of sphere for groundCheck
     public LayerMask groundMask; // control what object the sphere should check for
 
+    public AudioSource sndJump;
+    public AudioSource sndWalk;
+
     Vector3 velocity;
     bool isGrounded; // boolean to check if player is on the ground true/false
-
+    float walkTime = 0;
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); // create sphere based on these numbers, and if true/false
@@ -26,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity.y = -2f; // force player down to ground
             //Debug.Log("Player is grounded");
+            //sndWalk.Play();
+                
         }
 
         float x = Input.GetAxis("Horizontal");
@@ -40,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("Jump is pressed");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity); // squareroot of velocity needed to jump
+            sndJump.Play();
         }
 
         if (Input.GetKeyDown(KeyCode.T))

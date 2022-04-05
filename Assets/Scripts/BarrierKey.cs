@@ -23,6 +23,7 @@ public class BarrierKey : MonoBehaviour
         barrierVolume.SetActive(false);
         _soundKey.Play();
         // particle effect?
-        Destroy(gameObject, 0.1f);
+        _rotateSpeed = 0f;
+        //Destroy(gameObject, 0.5f);
     }
 }
