@@ -14,7 +14,7 @@ public class HazardVolume : MonoBehaviour
     GameObject _levelObject;
     Level01Controller _levelScore;
 
-    private void Start()
+    public void Start()
     {
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
@@ -22,7 +22,7 @@ public class HazardVolume : MonoBehaviour
         _levelObject = GameObject.Find("LevelController");
         _levelScore = _levelObject.GetComponent<Level01Controller>();
     }
-    private void Update()
+    public void Update()
     {
         float distance = Vector3.Distance(target.position, transform.position);
 
@@ -30,8 +30,6 @@ public class HazardVolume : MonoBehaviour
         if (distance <= lookRadius)
         {
             agent.SetDestination(target.position); // chase target
-
-            FaceTarget();
         }
     }
 
@@ -41,12 +39,6 @@ public class HazardVolume : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, lookRadius);
     }
 
-    void FaceTarget()
-    {
-        Vector3 direction = (target.position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -78,6 +70,6 @@ public class HazardVolume : MonoBehaviour
         sndBoom.Play();
         //add score
         _levelScore.IncreaseScore(10);
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, 0.5f);
     }
 }

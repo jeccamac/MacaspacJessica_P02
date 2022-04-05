@@ -422,14 +422,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHealthMax: 100
   enemyCurHealth: 0
-  lookRadius: 10
+  lookRadius: 20
   sndEnemyDeath: {fileID: 4958175778433338087}
   sndEnemyShoot: {fileID: 4958175778433338086}
   enemyRayOrigin: {fileID: 4958175777907813415}
-  enemyShootDist: 10
+  enemyShootDist: 20
   bulletTrail: {fileID: 557030263381338432, guid: 0ce07e45aa43b2b4b862a30f5a8be262,
     type: 3}
-  enemyWeaponDamage: 20
+  enemyWeaponDamage: 10
   shootDelay: 0.5
 --- !u!54 &4958175778433338104
 Rigidbody:

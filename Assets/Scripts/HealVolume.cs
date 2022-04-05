@@ -7,26 +7,34 @@ public class HealVolume : MonoBehaviour
     public AudioSource sndHeal;
     public float _rotateSpeed = 0.5f;
 
+    GameObject _playerObj;
+    PlayerStats _playerHealth;
+
     public void Start()
     {
+        _playerObj = GameObject.Find("FPS Player");
+        _playerHealth = _playerObj.GetComponent<PlayerStats>();
+
         sndHeal = GetComponent<AudioSource>();
     }
-    private void Update()
+    public void Update()
     {
-        transform.Rotate(_rotateSpeed, _rotateSpeed, 0, Space.World);
+        transform.Rotate(0, _rotateSpeed, 0, Space.World);
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("heal box");
         // detect if it's the player
         PlayerStats thisPlayer = other.gameObject.GetComponent<PlayerStats>();
         Debug.Log("Heal collision");
         // if we found player, continue
         if (thisPlayer != null)
         {
-            thisPlayer.AddHeal(10);
+            _playerHealth.AddHeal(10);
             sndHeal.Play();
-            Destroy(gameObject, 1f);
+            Destroy(gameObject, 0.5f);
         }
     }
+   
 }

@@ -15,7 +15,6 @@ public class CollectibleScore : MonoBehaviour
         scoreTracker = lvlController.GetComponent<Level01Controller>();
         _soundCollect = GetComponent<AudioSource>();
     }
-    /*
     public void OnTriggerEnter(Collider other)
     {
         // detect if it's the player
@@ -29,5 +28,4 @@ public class CollectibleScore : MonoBehaviour
             Destroy(gameObject, 1f);
         }
     }
-    */
 }
