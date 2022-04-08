@@ -14,6 +14,7 @@ public class GunController : MonoBehaviour
 
     [Tooltip("Visual feedback when firing, can be light or particles")]
     [SerializeField] TrailRenderer bulletTrail;
+    [SerializeField] ParticleSystem impactParticle;
 
     [SerializeField] int weaponDamage = 20;
     public AudioSource sndShoot;
@@ -43,13 +44,12 @@ public class GunController : MonoBehaviour
 
         sndShoot.Play();
         TrailRenderer trail = Instantiate(bulletTrail, rayOrigin.position, Quaternion.identity); // visual bullet trail
-        
+
         // fire the Raycast
         if (Physics.Raycast(rayOrigin.position, rayDirection, out objectHit, shootDistance)) // out objectHit gets info we stored on what the Raycast hit
         {
             Debug.Log("You Hit " + objectHit.transform.name); // get name of object you hit
             StartCoroutine(SpawnTrail(trail, objectHit));
-
 
             if (objectHit.transform.tag == "Enemy")
             {
@@ -59,6 +59,7 @@ public class GunController : MonoBehaviour
                 {
                     Debug.Log("Detected Enemy");
                     _enemy.EnemyTakeDamage(weaponDamage);
+                    
                 }
             }
 
@@ -70,6 +71,17 @@ public class GunController : MonoBehaviour
                 {
                     Debug.Log("Detected Bomb");
                     _hazard.BombDestroy();
+                }
+            }
+
+            if (objectHit.transform.tag == "KeyShield")
+            {
+                // unlock barriers
+                BarrierKey_Bridge _shieldKey = objectHit.transform.gameObject.GetComponent<BarrierKey_Bridge>();
+                if (_shieldKey != null)
+                {
+                    Debug.Log("Detected ShieldKey");
+                    _shieldKey.UnlockShields();
                 }
             }
 

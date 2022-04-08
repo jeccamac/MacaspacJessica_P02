@@ -31,7 +31,7 @@ public class HealVolume : MonoBehaviour
         // if we found player, continue
         if (thisPlayer != null)
         {
-            _playerHealth.AddHeal(10);
+            _playerHealth.AddHeal(50);
             sndHeal.Play();
             Destroy(gameObject, 0.5f);
         }

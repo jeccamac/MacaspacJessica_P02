@@ -57,8 +57,10 @@ public class PlayerStats : MonoBehaviour
             _deathHUD.SetActive(true);
 
             // Instantiate at position (0, 0, 0) and zero rotation.
-            Instantiate(corpsePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            Instantiate(corpsePrefab, new Vector3(0, 6, 0), Quaternion.identity);
+            corpsePrefab.transform.SetParent(transform.parent, true);
             Instantiate(corpseCam, new Vector3(0, 0, 0), Quaternion.identity);
+            corpseCam.transform.SetParent(transform.parent, true);
 
             Cursor.lockState = CursorLockMode.None;
 
@@ -74,7 +76,7 @@ public class PlayerStats : MonoBehaviour
     {
         currentHealth -= damageAmount;
         damageAmount = System.Math.Abs(damageAmount); // ensure number is not negative
-        Debug.Log("Health is now " + currentHealth);
+        //Debug.Log("Health is now " + currentHealth);
 
         // update slider
         hudManager.UpdatePlayerHealth();
@@ -86,7 +88,7 @@ public class PlayerStats : MonoBehaviour
     {
         currentHealth += healAmount;
         healAmount = System.Math.Abs(healAmount);
-        Debug.Log("Health is now " + currentHealth);
+        //Debug.Log("Health is now " + currentHealth);
 
         //update slider
         hudManager.UpdatePlayerHealth();
@@ -95,7 +97,7 @@ public class PlayerStats : MonoBehaviour
     public void TakeStamina(float minusStamina)
     {
         currentStamina -= minusStamina;
-        Debug.Log("Stamina is now " + currentStamina);
+        //Debug.Log("Stamina is now " + currentStamina);
 
         //update slider
         hudManager.UpdatePlayerStamina();
@@ -104,7 +106,7 @@ public class PlayerStats : MonoBehaviour
     public void AddStamina(float addStamina)
     {
         currentStamina += addStamina;
-        Debug.Log("Stamina is now " + currentStamina);
+        //Debug.Log("Stamina is now " + currentStamina);
 
         //update slider
         hudManager.UpdatePlayerStamina();

@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sndBoom: {fileID: 6890087733090491062}
-  lookRadius: 10
+  lookRadius: 15
 --- !u!135 &7886266337452578592
 SphereCollider:
   m_ObjectHideFlags: 0

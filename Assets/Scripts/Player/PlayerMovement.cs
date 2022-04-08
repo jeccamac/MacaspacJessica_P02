@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            Debug.Log("Jump is pressed");
+            //Debug.Log("Jump is pressed");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity); // squareroot of velocity needed to jump
             sndJump.Play();
         }
@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (curStamina.currentStamina != 0)
             {
-                Debug.Log("Sprint is pressed");
+                //Debug.Log("Sprint is pressed");
                 characterSpeed = characterSprint;
                 curStamina.TakeStamina(1);
             }
@@ -86,6 +86,7 @@ public class PlayerMovement : MonoBehaviour
         {
             //Debug.Log("Not sprinting");
             characterSpeed = 12f;
+            //sndWalk.Play();
         }
     }
 }

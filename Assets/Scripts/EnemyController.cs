@@ -11,6 +11,8 @@ public class EnemyController : MonoBehaviour
     public float lookRadius = 20f; // range at which enemy detects player
     public AudioSource sndEnemyDeath;
     public AudioSource sndEnemyShoot;
+    public AudioSource sndHit;
+    public AudioSource sndDetect;
 
     Transform target; // player to target
     //NavMeshAgent agent; // enemy mesh to move around
@@ -32,6 +34,8 @@ public class EnemyController : MonoBehaviour
     GameObject _lvlObj;
     Level01Controller _lvlScore;
 
+    [SerializeField] ParticleSystem _hitParticle;
+
     //[Tooltip("What objects in the layer you are able to hit")]
     //[SerializeField] LayerMask hitLayers;
 
@@ -46,13 +50,11 @@ public class EnemyController : MonoBehaviour
 
         _lvlObj = GameObject.Find("LevelController");
         _lvlScore = _lvlObj.GetComponent<Level01Controller>();
-
     }
 
     public void Update()
     {
         //enemyCurHealth = Mathf.Clamp(enemyCurHealth, 0, enemyHealthMax);
-
         // detect player within certain range
         float distance = Vector3.Distance(target.position, transform.position);
 
@@ -60,10 +62,9 @@ public class EnemyController : MonoBehaviour
         if (distance <= lookRadius)
         {
             //agent.SetDestination(target.position); // chase target
-
+            sndDetect.Play();
             FaceTarget();
-            EnemyShoot();
-            
+            EnemyShoot();            
         }
 
 
@@ -162,5 +163,7 @@ public class EnemyController : MonoBehaviour
         Debug.Log("Enemy Health: " + enemyCurHealth);
         enemyCurHealth -= takeDamage;
         takeDamage = System.Math.Abs(takeDamage); // is not a negative number
+        sndHit.Play();
+        //_hitParticle.Play();
     }
 }

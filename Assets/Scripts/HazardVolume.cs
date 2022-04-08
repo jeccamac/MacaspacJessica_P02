@@ -57,7 +57,7 @@ public class HazardVolume : MonoBehaviour
 
                 sndBoom.Play();
 
-                Destroy(gameObject, 1f);
+                Destroy(gameObject, 0.5f);
             }
             else { Debug.Log("Invincible!"); }
 
