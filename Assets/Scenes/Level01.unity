@@ -49294,7 +49294,8 @@ MonoBehaviour:
   shootDistance: 25
   bulletTrail: {fileID: 557030263381338432, guid: 0ce07e45aa43b2b4b862a30f5a8be262,
     type: 3}
-  impactParticle: {fileID: 0}
+  impactParticle: {fileID: 5366536785699797120, guid: b6d09598993c63245ac387097cdafaa5,
+    type: 3}
   weaponDamage: 40
   sndShoot: {fileID: 1683035297}
 --- !u!82 &1683035294

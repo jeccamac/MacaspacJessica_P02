@@ -47,9 +47,11 @@ public class GunController : MonoBehaviour
 
         // fire the Raycast
         if (Physics.Raycast(rayOrigin.position, rayDirection, out objectHit, shootDistance)) // out objectHit gets info we stored on what the Raycast hit
-        {
+        {            
             Debug.Log("You Hit " + objectHit.transform.name); // get name of object you hit
             StartCoroutine(SpawnTrail(trail, objectHit));
+            
+            Instantiate(impactParticle, objectHit.point, Quaternion.identity);
 
             if (objectHit.transform.tag == "Enemy")
             {
@@ -121,7 +123,7 @@ public class GunController : MonoBehaviour
         Destroy(Trail.gameObject, Trail.time);
     }
     
-
+   
     /* ASSAULT RIFLE - Burst Fire
     on the gun object
 	if gun step is greater then 0
